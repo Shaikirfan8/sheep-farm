@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
+const helmet = require("helmet");
 
 // Swagger
 const swaggerUi = require("swagger-ui-express");
@@ -22,7 +23,10 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ================= Middleware =================
+// ================= Security & Middleware =================
+
+// Security HTTP Headers
+app.use(helmet());
 
 // HTTP Request Logger
 app.use(morgan("dev"));
