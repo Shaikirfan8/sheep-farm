@@ -6,6 +6,12 @@ const path = require("path");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
+// Rate Limiter
+const {
+    apiLimiter,
+    loginLimiter
+} = require("./middleware/rateLimiter");
+
 // Swagger
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger/swagger");
@@ -30,6 +36,13 @@ app.use(helmet());
 
 // HTTP Request Logger
 app.use(morgan("dev"));
+
+// API Rate Limiter
+// Login Protection
+app.use("/api/auth/login", loginLimiter);
+
+// General API Protection
+app.use(apiLimiter);
 
 // Enable CORS
 app.use(cors());
