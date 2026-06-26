@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const morgan = require("morgan");
 
 // Swagger
 const swaggerUi = require("swagger-ui-express");
@@ -23,7 +24,13 @@ const app = express();
 
 // ================= Middleware =================
 
+// HTTP Request Logger
+app.use(morgan("dev"));
+
+// Enable CORS
 app.use(cors());
+
+// Parse JSON Request Body
 app.use(express.json());
 
 // Serve Uploaded Images

@@ -84,7 +84,17 @@ exports.login = (req, res, next) => {
     console.log("🔥 LOGIN API HIT");
     console.log("BODY:", req.body);
 
-    const { username, password } = req.body;
+    const {
+    username,
+    password
+} = req.body || {};
+
+if (!username || !password) {
+    return res.status(400).json({
+        success: false,
+        message: "Username and Password are required"
+    });
+}
 
     const sql = "SELECT * FROM users WHERE username = ?";
 
