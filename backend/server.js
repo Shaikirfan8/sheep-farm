@@ -24,6 +24,7 @@ require("./config/database");
 const authRoutes = require("./routes/authRoutes");
 const sheepRoutes = require("./routes/sheepRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const healthRoutes = require("./routes/healthRoutes"); // <-- NEW
 
 // Global Error Handler
 const errorHandler = require("./middleware/errorHandler");
@@ -72,6 +73,10 @@ app.use(
 // API Routes
 // =====================================================
 
+// Health Check Route
+app.use("/health", healthRoutes);
+
+// Application Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/sheep", sheepRoutes);
 app.use("/api/dashboard", dashboardRoutes);
