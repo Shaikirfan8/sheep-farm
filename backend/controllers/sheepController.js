@@ -1,112 +1,118 @@
-const Sheep = require("../models/sheepModel");
+const sheepService = require("../services/sheepService");
 
 const { sendSuccess } = require("../utils/responseHandler");
 
 // ================= GET ALL SHEEP =================
 
-exports.getAllSheep = (req, res, next) => {
+exports.getAllSheep = async (req, res, next) => {
 
-    Sheep.getAllSheep(req.query, (err, results) => {
+    try {
 
-        if (err) return next(err);
+        const result = await sheepService.getAllSheep(req.query);
 
         return sendSuccess(
             res,
             "Sheep Retrieved Successfully",
-            {
-                page: Number(req.query.page || 1),
-                limit: Number(req.query.limit || 10),
-                totalRecords: results.length,
-                sheep: results
-            }
+            result
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
 
 // ================= GET SHEEP BY ID =================
 
-exports.getSheepById = (req, res, next) => {
+exports.getSheepById = async (req, res, next) => {
 
-    Sheep.getSheepById(req.params.id, (err, results) => {
+    try {
 
-        if (err) return next(err);
+        const result = await sheepService.getSheepById(req.params.id);
 
         return sendSuccess(
             res,
             "Sheep Retrieved Successfully",
-            results[0] || null
+            result
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
 
 // ================= ADD SHEEP =================
 
-exports.addSheep = (req, res, next) => {
+exports.addSheep = async (req, res, next) => {
 
-    const sheepData = {
+    try {
 
-        tag_number: req.body.tag_number,
-        breed: req.body.breed,
-        gender: req.body.gender,
-        birth_date: req.body.birth_date,
-        weight: req.body.weight,
-        status: req.body.status,
-
-        image: req.file
-            ? "/uploads/" + req.file.filename
-            : null
-
-    };
-
-    Sheep.addSheep(sheepData, (err) => {
-
-        if (err) return next(err);
+        const result = await sheepService.addSheep(
+            req.body,
+            req.file
+        );
 
         return sendSuccess(
             res,
             "Sheep Added Successfully",
-            sheepData,
+            result,
             201
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
 
 // ================= UPDATE SHEEP =================
 
-exports.updateSheep = (req, res, next) => {
+exports.updateSheep = async (req, res, next) => {
 
-    Sheep.updateSheep(req.params.id, req.body, (err) => {
+    try {
 
-        if (err) return next(err);
+        await sheepService.updateSheep(
+            req.params.id,
+            req.body
+        );
 
         return sendSuccess(
             res,
             "Sheep Updated Successfully"
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
 
 // ================= DELETE SHEEP =================
 
-exports.deleteSheep = (req, res, next) => {
+exports.deleteSheep = async (req, res, next) => {
 
-    Sheep.deleteSheep(req.params.id, (err) => {
+    try {
 
-        if (err) return next(err);
+        await sheepService.deleteSheep(req.params.id);
 
         return sendSuccess(
             res,
             "Sheep Deleted Successfully"
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
