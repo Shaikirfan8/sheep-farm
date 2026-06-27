@@ -13,6 +13,9 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 
+// Enterprise Logger
+const logger = require("./utils/logger");
+
 // Enterprise Rate Limiter
 const {
     apiLimiter,
@@ -110,5 +113,5 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on Port ${PORT}`);
+    logger.info(`🚀 Server running on Port ${PORT}`);
 });

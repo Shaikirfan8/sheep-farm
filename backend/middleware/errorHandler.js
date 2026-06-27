@@ -1,6 +1,8 @@
+const logger = require("../utils/logger");
+
 const errorHandler = (err, req, res, next) => {
 
-    console.error(err);
+    logger.error(err);
 
     res.status(err.status || 500).json({
 
