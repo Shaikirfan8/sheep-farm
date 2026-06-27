@@ -5,8 +5,9 @@ const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const compression = require("compression");
 
-// Rate Limiter
+// Enterprise Rate Limiter
 const {
     apiLimiter,
     loginLimiter
@@ -29,7 +30,9 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ================= Security & Middleware =================
+// =====================================================
+// Security & Middleware
+// =====================================================
 
 // Security HTTP Headers
 app.use(helmet());
@@ -37,12 +40,14 @@ app.use(helmet());
 // HTTP Request Logger
 app.use(morgan("dev"));
 
-// API Rate Limiter
-// Login Protection
+// Login Rate Limiter (Protect Login API)
 app.use("/api/auth/login", loginLimiter);
 
-// General API Protection
+// General API Rate Limiter
 app.use(apiLimiter);
+
+// Compress HTTP Responses
+app.use(compression());
 
 // Enable CORS
 app.use(cors());
@@ -53,7 +58,9 @@ app.use(express.json());
 // Serve Uploaded Images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ================= Swagger =================
+// =====================================================
+// Swagger Documentation
+// =====================================================
 
 app.use(
     "/api-docs",
@@ -61,13 +68,17 @@ app.use(
     swaggerUi.setup(swaggerSpec)
 );
 
-// ================= API Routes =================
+// =====================================================
+// API Routes
+// =====================================================
 
 app.use("/api/auth", authRoutes);
 app.use("/api/sheep", sheepRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-// ================= Home Route =================
+// =====================================================
+// Home Route
+// =====================================================
 
 app.get("/", (req, res) => {
     res.json({
@@ -75,11 +86,15 @@ app.get("/", (req, res) => {
     });
 });
 
-// ================= Global Error Handler =================
+// =====================================================
+// Global Error Handler
+// =====================================================
 
 app.use(errorHandler);
 
-// ================= Start Server =================
+// =====================================================
+// Start Server
+// =====================================================
 
 const PORT = process.env.PORT || 5000;
 
