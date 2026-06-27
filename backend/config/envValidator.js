@@ -1,6 +1,8 @@
 // ================= REQUIRED ENV VARIABLES =================
 
-const requiredEnvVars = [
+const logger = require("../utils/logger");
+
+const requiredEnv = [
     "DB_HOST",
     "DB_USER",
     "DB_PASSWORD",
@@ -12,25 +14,25 @@ const requiredEnvVars = [
 
 const validateEnv = () => {
 
-    const missingEnvVars = requiredEnvVars.filter(
+    const missingEnvVars = requiredEnv.filter(
         (envVar) => !process.env[envVar]
     );
 
     if (missingEnvVars.length > 0) {
 
-        console.error("\n❌ Missing Required Environment Variables:\n");
+        logger.error("❌ Missing Required Environment Variables:");
 
         missingEnvVars.forEach((envVar) => {
-            console.error(`- ${envVar}`);
+            logger.error(`- ${envVar}`);
         });
 
-        console.error("\nApplication startup aborted.\n");
+        logger.error("Application startup aborted...");
 
         process.exit(1);
 
     }
 
-    console.log("✅ Environment variables validated successfully.");
+    logger.info("✅ Environment variables validated");
 
 };
 

@@ -2,7 +2,7 @@ const authService = require("../services/authService");
 
 const { sendSuccess } = require("../utils/responseHandler");
 
-console.log("🔥 authController Loaded");
+
 
 // ================= REGISTER =================
 

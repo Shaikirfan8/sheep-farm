@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const logger = require("../utils/logger");
 
 // Storage Configuration
 const storage = multer.diskStorage({
@@ -24,7 +25,7 @@ const storage = multer.diskStorage({
 // Allow Images Only
 const fileFilter = (req, file, cb) => {
 
-    console.log("📁 FILE RECEIVED:", file);
+    logger.info(`📁 File Uploaded: ${file.originalname}`);
 
     if (file.mimetype.startsWith("image/")) {
         cb(null, true);
