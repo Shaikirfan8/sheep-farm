@@ -1,21 +1,25 @@
-const Dashboard = require("../models/dashboardModel");
+const dashboardService = require("../services/dashboardService");
 
 const { sendSuccess } = require("../utils/responseHandler");
 
 // ================= GET DASHBOARD =================
 
-exports.getDashboard = (req, res, next) => {
+exports.getDashboard = async (req, res, next) => {
 
-    Dashboard.getDashboardStats((err, results) => {
+    try {
 
-        if (err) return next(err);
+        const result = await dashboardService.getDashboard();
 
         return sendSuccess(
             res,
             "Dashboard Loaded Successfully",
-            results[0]
+            result
         );
 
-    });
+    } catch (err) {
+
+        next(err);
+
+    }
 
 };
