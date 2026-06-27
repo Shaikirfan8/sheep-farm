@@ -1,5 +1,11 @@
 require("dotenv").config();
 
+// ================= Environment Validation =================
+const validateEnv = require("./config/envValidator");
+
+// Validate Environment Variables BEFORE starting the application
+validateEnv();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -24,7 +30,7 @@ require("./config/database");
 const authRoutes = require("./routes/authRoutes");
 const sheepRoutes = require("./routes/sheepRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
-const healthRoutes = require("./routes/healthRoutes"); // <-- NEW
+const healthRoutes = require("./routes/healthRoutes");
 
 // Global Error Handler
 const errorHandler = require("./middleware/errorHandler");
