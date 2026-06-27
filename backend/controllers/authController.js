@@ -10,26 +10,7 @@ exports.register = async (req, res, next) => {
 
     try {
 
-        const {
-            full_name,
-            username,
-            password,
-            role
-        } = req.body || {};
-
-        if (!full_name || !username || !password || !role) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required"
-            });
-        }
-
-        await authService.register({
-            full_name,
-            username,
-            password,
-            role
-        });
+        await authService.register(req.body);
 
         return sendSuccess(
             res,
@@ -59,22 +40,7 @@ exports.login = async (req, res, next) => {
 
     try {
 
-        const {
-            username,
-            password
-        } = req.body || {};
-
-        if (!username || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Username and Password are required"
-            });
-        }
-
-        const result = await authService.login({
-            username,
-            password
-        });
+        const result = await authService.login(req.body);
 
         return sendSuccess(
             res,

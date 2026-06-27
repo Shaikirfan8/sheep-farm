@@ -3,6 +3,12 @@ const router = express.Router();
 
 const authController = require("../controllers/authController");
 
+const {
+    loginValidation,
+    registerValidation,
+    validate
+} = require("../validations/authValidation");
+
 /**
  * @swagger
  * tags:
@@ -42,7 +48,12 @@ const authController = require("../controllers/authController");
  */
 
 // Login
-router.post("/login", authController.login);
+router.post(
+    "/login",
+    loginValidation,
+    validate,
+    authController.login
+);
 
 /**
  * @swagger
@@ -84,6 +95,11 @@ router.post("/login", authController.login);
  */
 
 // Register
-router.post("/register", authController.register);
+router.post(
+    "/register",
+    registerValidation,
+    validate,
+    authController.register
+);
 
 module.exports = router;

@@ -41,10 +41,15 @@ const login = async ({ username, password }) => {
         }
     );
 
-    return {
-        token,
-        user
-    };
+    const {
+    password: _,
+    ...safeUser
+} = user;
+
+return {
+    token,
+    user: safeUser
+};
 
 };
 
