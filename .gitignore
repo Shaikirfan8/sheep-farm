@@ -1,0 +1,4 @@
+# Repository-wide ignores
+.DS_Store
+Thumbs.db
+*.log
