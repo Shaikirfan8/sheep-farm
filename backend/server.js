@@ -7,7 +7,6 @@ const validateEnv = require("./config/envValidator");
 validateEnv();
 
 const express = require("express");
-app.set("trust proxy", 1);
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
@@ -39,7 +38,14 @@ const healthRoutes = require("./routes/healthRoutes");
 // Global Error Handler
 const errorHandler = require("./middleware/errorHandler");
 
+// =====================================================
+// Create Express App
+// =====================================================
+
 const app = express();
+
+// Trust reverse proxy (Required for Cloud Run)
+app.set("trust proxy", 1);
 
 // =====================================================
 // Security & Middleware
