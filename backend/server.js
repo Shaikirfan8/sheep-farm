@@ -7,6 +7,7 @@ const validateEnv = require("./config/envValidator");
 validateEnv();
 
 const express = require("express");
+app.set("trust proxy", 1);
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
